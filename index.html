@@ -25,7 +25,7 @@
 </head>
 <body class="font-sans text-gray-800">
   <!-- Background Music -->
-  <audio id="bg-music" loop autoplay>
+  <audio id="bg-music" autoplay loop>
     <source src="https://cdn.pixabay.com/download/audio/2023/03/25/audio_7fce188ba6.mp3?filename=calm-piano-ambience-145038.mp3" type="audio/mpeg">
     Trình duyệt của bạn không hỗ trợ audio.
   </audio>
@@ -49,8 +49,9 @@
       const form = document.querySelector('form');
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        const name = form.querySelector('input[type="text"]').value.trim();
-        const contact = form.querySelector('input[type="email"]').value.trim();
+        const inputs = form.querySelectorAll('input');
+        const name = inputs[0].value.trim();
+        const contact = inputs[1].value.trim();
 
         if (!name || !contact) {
           Swal.fire({
@@ -61,7 +62,6 @@
           return;
         }
 
-        // Kiểm tra nếu không phải email thì phải là số điện thoại 9-11 số
         const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
         const isPhone = /^\d{9,11}$/.test(contact);
 
@@ -74,14 +74,12 @@
           return;
         }
 
-        // Hiển thị thông báo thành công đẹp
         Swal.fire({
           icon: 'success',
           title: '✅ Đã gửi thành công!',
           text: 'TâmAI đã nhận được thư của bạn. Cảm ơn vì đã chia sẻ.'
         });
 
-        // Reset form sau khi gửi
         form.reset();
       });
     });
@@ -122,7 +120,7 @@
     <p class="text-gray-600 mb-6">Đăng ký để trải nghiệm TâmAI. Chúng mình sẽ gửi link thử nghiệm qua email hoặc Zalo.</p>
     <form class="max-w-md mx-auto">
       <input type="text" placeholder="Tên của bạn" class="w-full p-3 mb-4 rounded border border-gray-300" />
-      <input type="email" placeholder="Email hoặc SĐT Zalo" class="w-full p-3 mb-4 rounded border border-gray-300" />
+      <input type="text" placeholder="Email hoặc SĐT Zalo" class="w-full p-3 mb-4 rounded border border-gray-300" />
       <button type="submit" class="bg-pink-600 text-white py-3 px-6 rounded-full shadow hover:bg-pink-700 transition duration-300 transform hover:scale-105">Gửi thư cho TâmAI</button>
     </form>
   </section>
