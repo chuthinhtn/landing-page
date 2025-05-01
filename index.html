@@ -64,10 +64,10 @@
           return;
         }
 
-        const isEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(contact);
-        const isPhone = /^\\d{9,11}$/.test(contact);
+        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+        const isPhone = /^\d{9,11}$/.test(contact);
 
-        if (!isEmail && !isPhone) {
+        if (!(isEmail || isPhone)) {
           Swal.fire({ icon: 'error', title: 'Định dạng không hợp lệ', text: 'Email sai định dạng hoặc SĐT phải có 9–11 chữ số.' });
           return;
         }
