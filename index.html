@@ -50,13 +50,26 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         const name = form.querySelector('input[type="text"]').value.trim();
-        const email = form.querySelector('input[type="email"]').value.trim();
+        const contact = form.querySelector('input[type="email"]').value.trim();
 
-        if (!name || !email) {
+        if (!name || !contact) {
           Swal.fire({
             icon: 'warning',
             title: 'Thiếu thông tin',
-            text: 'Vui lòng điền đầy đủ tên và email/Zalo trước khi gửi.'
+            text: 'Vui lòng điền đầy đủ tên và email hoặc SĐT Zalo trước khi gửi.'
+          });
+          return;
+        }
+
+        // Kiểm tra nếu không phải email thì phải là số điện thoại 9-11 số
+        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+        const isPhone = /^\d{9,11}$/.test(contact);
+
+        if (!isEmail && !isPhone) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Định dạng không hợp lệ',
+            text: 'Email phải đúng định dạng hoặc SĐT phải có 9-11 chữ số.'
           });
           return;
         }
@@ -68,7 +81,7 @@
           text: 'TâmAI đã nhận được thư của bạn. Cảm ơn vì đã chia sẻ.'
         });
 
-        // Sau này có thể thêm gửi đến Google Sheets hoặc backend ở đây
+        // Reset form sau khi gửi
         form.reset();
       });
     });
