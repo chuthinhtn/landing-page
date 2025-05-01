@@ -5,10 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TâmAI – Thư chưa từng gửi</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease-out forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body class="font-sans text-gray-800">
+  <!-- Background Music -->
+  <audio id="bg-music" loop autoplay>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/25/audio_7fce188ba6.mp3?filename=calm-piano-ambience-145038.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ audio.
+  </audio>
+
+  <script>
+    // Bật nhạc ngay khi trang tải xong
+    document.addEventListener('DOMContentLoaded', () => {
+      const music = document.getElementById('bg-music');
+      const tryPlay = () => {
+        music.muted = false;
+        const playPromise = music.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Nếu trình duyệt chặn, đợi người dùng tương tác
+            document.addEventListener('click', () => {
+              music.play();
+            }, { once: true });
+          });
+        }
+      };
+      tryPlay();
+    });
+  </script>
+
   <!-- Header -->
-  <section class="text-center py-12 bg-gradient-to-b from-pink-50 to-white">
+  <section class="text-center py-12 bg-gradient-to-b from-pink-50 to-white fade-in">
     <h1 class="text-4xl font-bold mb-4">💌 Viết ra điều chưa từng dám nói.</h1>
     <p class="text-lg text-gray-700 max-w-xl mx-auto">
       Có những cảm xúc… không ai hiểu. Có những lời… ta từng muốn nói, nhưng mãi giấu vào lòng.<br>
@@ -20,7 +62,7 @@
   </section>
 
   <!-- Features -->
-  <section class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 py-12 bg-white">
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 py-12 bg-white fade-in" style="animation-delay: 0.3s;">
     <div>
       <h2 class="text-2xl font-semibold mb-2">👂 Một AI biết lắng nghe</h2>
       <p class="text-gray-600">
@@ -37,14 +79,25 @@
   </section>
 
   <!-- Call to Action -->
-  <section id="form" class="bg-gray-100 py-12 px-8 text-center">
+  <section id="form" class="bg-gray-100 py-12 px-8 text-center fade-in" style="animation-delay: 0.6s;">
     <h2 class="text-3xl font-bold mb-4">📝 Gửi một lá thư – nhận lại một cảm xúc</h2>
     <p class="text-gray-600 mb-6">Đăng ký để trải nghiệm TâmAI. Chúng mình sẽ gửi link thử nghiệm qua email hoặc Zalo.</p>
     <form class="max-w-md mx-auto">
       <input type="text" placeholder="Tên của bạn" class="w-full p-3 mb-4 rounded border border-gray-300" />
       <input type="email" placeholder="Email hoặc SĐT Zalo" class="w-full p-3 mb-4 rounded border border-gray-300" />
-      <button class="bg-pink-600 text-white py-3 px-6 rounded-full shadow hover:bg-pink-700">Gửi thư cho TâmAI</button>
+      <button class="bg-pink-600 text-white py-3 px-6 rounded-full shadow hover:bg-pink-700 transition duration-300 transform hover:scale-105">Gửi thư cho TâmAI</button>
     </form>
+  </section>
+
+  <!-- About Creator -->
+  <section class="bg-white py-12 px-8 text-center fade-in" style="animation-delay: 0.9s;">
+    <h2 class="text-2xl font-bold mb-4">👨‍💻 Người tạo ra TâmAI</h2>
+    <div class="flex flex-col items-center">
+      <img src="https://avatars.githubusercontent.com/u/00000000?v=4" alt="Ảnh Chu Thịnh" class="w-24 h-24 rounded-full mb-4 shadow-lg" />
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        TâmAI được tạo ra bởi Chu Thịnh – một người tin rằng công nghệ không chỉ để tự động hóa, mà còn để <strong>thấu hiểu cảm xúc con người</strong>. Với hành trình học AI mỗi ngày, Thịnh đã xây dựng một sản phẩm giúp con người <em>viết ra điều chưa từng dám nói</em> – và nhận lại một sự lắng nghe chân thành từ trí tuệ nhân tạo.
+      </p>
+    </div>
   </section>
 </body>
 </html>
