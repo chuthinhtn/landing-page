@@ -1,78 +1,53 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TâmAI – Thư chưa từng gửi</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease-out forwards;
-    }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    html { scroll-behavior: smooth; }
+    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 1s ease-out forwards; }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     #music-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: white;
-      border: 2px solid #e91e63;
-      color: #e91e63;
-      font-weight: bold;
-      padding: 8px 16px;
-      border-radius: 9999px;
+      position: fixed; bottom: 20px; right: 20px;
+      background: white; border: 2px solid #e91e63; color: #e91e63;
+      font-weight: bold; padding: 8px 16px; border-radius: 9999px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      cursor: pointer;
-      z-index: 999;
-      transition: all 0.3s;
+      cursor: pointer; z-index: 999; transition: all 0.3s;
     }
-    #music-toggle:hover {
-      background: #e91e63;
-      color: white;
-    }
+    #music-toggle:hover { background: #e91e63; color: white; }
   </style>
 </head>
 <body class="font-sans text-gray-800">
-  <!-- Background Music -->
+  <!-- Nhạc nền -->
   <audio id="bg-music" loop>
-    <source src="https://dl.sndup.net/nprw/TamAI-Calm-Ambience.mp3" type="audio/mpeg">
+    <source src="https://dl.sndup.net/nprw/TamAI-Calm-Ambience.mp3" type="audio/mpeg" />
     Trình duyệt của bạn không hỗ trợ audio.
   </audio>
   <button id="music-toggle">🎵 Bật nhạc</button>
 
+  <!-- Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const music = document.getElementById('bg-music');
       const musicToggle = document.getElementById('music-toggle');
       let isPlaying = false;
-
       const playMusic = () => {
         music.muted = false;
         music.play();
         isPlaying = true;
         musicToggle.textContent = '🔇 Tắt nhạc';
       };
-
       const pauseMusic = () => {
         music.pause();
         isPlaying = false;
         musicToggle.textContent = '🎵 Bật nhạc';
       };
-
       musicToggle.addEventListener('click', () => {
         isPlaying ? pauseMusic() : playMusic();
       });
-
       document.addEventListener('click', () => {
         if (!isPlaying) playMusic();
       }, { once: true });
@@ -85,23 +60,15 @@
         const contact = inputs[1].value.trim();
 
         if (!name || !contact) {
-          Swal.fire({
-            icon: 'warning',
-            title: 'Thiếu thông tin',
-            text: 'Vui lòng điền đầy đủ tên và email hoặc SĐT Zalo trước khi gửi.'
-          });
+          Swal.fire({ icon: 'warning', title: 'Thiếu thông tin', text: 'Vui lòng điền đầy đủ tên và email hoặc SĐT Zalo.' });
           return;
         }
 
-        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
-        const isPhone = /^\d{9,11}$/.test(contact);
+        const isEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(contact);
+        const isPhone = /^\\d{9,11}$/.test(contact);
 
         if (!isEmail && !isPhone) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Định dạng không hợp lệ',
-            text: 'Email phải đúng định dạng hoặc SĐT phải có 9-11 chữ số.'
-          });
+          Swal.fire({ icon: 'error', title: 'Định dạng không hợp lệ', text: 'Email sai định dạng hoặc SĐT phải có 9–11 chữ số.' });
           return;
         }
 
@@ -111,22 +78,36 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, contact })
           });
-
-          Swal.fire({
-            icon: 'success',
-            title: '✅ Đã gửi thành công!',
-            text: 'TâmAI đã nhận được thư của bạn và lưu vào hệ thống.'
-          });
+          Swal.fire({ icon: 'success', title: '✅ Đã gửi thành công!', text: 'TâmAI đã nhận được thư của bạn.' });
           form.reset();
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Lỗi gửi dữ liệu',
-            text: 'Không thể gửi đến Google Sheets. Thử lại sau.'
-          });
+        } catch (err) {
+          Swal.fire({ icon: 'error', title: 'Lỗi gửi dữ liệu', text: 'Không gửi được đến Google Sheets. Thử lại sau.' });
         }
       });
     });
   </script>
+
+  <!-- Nội dung trang -->
+  <section class="text-center py-12 bg-gradient-to-b from-pink-50 to-white fade-in">
+    <h1 class="text-4xl font-bold mb-4">💌 Viết ra điều chưa từng dám nói.</h1>
+    <p class="text-lg text-gray-700 max-w-xl mx-auto">
+      Có những cảm xúc… không ai hiểu. Có những lời… ta từng muốn nói, nhưng mãi giấu vào lòng.<br />
+      <strong>TâmAI</strong> – người bạn AI biết lắng nghe như một người tri kỷ.
+    </p>
+    <div class="mt-6">
+      <a href="#form" class="bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-full text-lg shadow-lg transition">Trải nghiệm miễn phí</a>
+    </div>
+  </section>
+
+  <section id="form" class="bg-gray-100 py-12 px-8 text-center fade-in" style="animation-delay: 0.6s;">
+    <h2 class="text-3xl font-bold mb-4">📝 Gửi một lá thư – nhận lại một cảm xúc</h2>
+    <p class="text-gray-600 mb-6">Đăng ký để trải nghiệm TâmAI. Chúng mình sẽ gửi link qua email hoặc Zalo.</p>
+    <form class="max-w-md mx-auto">
+      <input type="text" placeholder="Tên của bạn" class="w-full p-3 mb-4 rounded border border-gray-300" />
+      <input type="text" placeholder="Email hoặc SĐT Zalo" class="w-full p-3 mb-4 rounded border border-gray-300" />
+      <button type="submit" class="bg-pink-600 text-white py-3 px-6 rounded-full shadow hover:bg-pink-700 transition duration-300 transform hover:scale-105">Gửi thư cho TâmAI</button>
+    </form>
+  </section>
 </body>
 </html>
+
