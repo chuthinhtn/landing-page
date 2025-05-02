@@ -72,17 +72,13 @@
           return;
         }
 
-        try {
-          await fetch("https://script.google.com/macros/s/AKfycbwjS9rM04DZ7booxJMc2NLDE-A-xx57fHDccAlL-v-dw1K4h_VmN0XtDkkobKIRxN6i7g/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, contact })
-          });
-          Swal.fire({ icon: 'success', title: '✅ Đã gửi thành công!', text: 'TâmAI đã nhận được thư của bạn.' });
-          form.reset();
-        } catch (err) {
-          Swal.fire({ icon: 'error', title: 'Lỗi gửi dữ liệu', text: 'Không gửi được đến Google Sheets. Thử lại sau.' });
-        }
+        // Không gửi đi đâu cả, chỉ popup cảm ơn
+        Swal.fire({
+          icon: 'success',
+          title: '✅ Thư đã được ghi nhận!',
+          text: 'Cảm ơn bạn đã chia sẻ với TâmAI. Hẹn gặp lại trong trải nghiệm tiếp theo.'
+        });
+        form.reset();
       });
     });
   </script>
