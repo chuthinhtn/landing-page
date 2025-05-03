@@ -58,6 +58,7 @@
         const inputs = form.querySelectorAll('input');
         const name = inputs[0].value.trim();
         const contact = inputs[1].value.trim();
+        const emotion = document.getElementById('emotion').value;
 
         if (!name || !contact) {
           Swal.fire({ icon: 'warning', title: 'Thiếu thông tin', text: 'Vui lòng điền đầy đủ tên và email hoặc SĐT Zalo.' });
@@ -72,11 +73,15 @@
           return;
         }
 
-        // Không gửi đi đâu cả, chỉ popup cảm ơn
+        if (!emotion) {
+          Swal.fire({ icon: 'warning', title: 'Hãy chọn cảm xúc', text: 'TâmAI cần biết bạn đang cảm thấy thế nào 💖' });
+          return;
+        }
+
         Swal.fire({
           icon: 'success',
           title: '✅ Thư đã được ghi nhận!',
-          text: 'Cảm ơn bạn đã chia sẻ với TâmAI. Hẹn gặp lại trong trải nghiệm tiếp theo.'
+          html: `Cảm ơn bạn đã chia sẻ với TâmAI. Chúng tôi ghi nhận cảm xúc <strong>"${emotion}"</strong> của bạn. Hẹn gặp lại trong trải nghiệm tiếp theo.`,
         });
         form.reset();
       });
@@ -101,6 +106,14 @@
     <form class="max-w-md mx-auto">
       <input type="text" placeholder="Tên của bạn" class="w-full p-3 mb-4 rounded border border-gray-300" />
       <input type="text" placeholder="Email hoặc SĐT Zalo" class="w-full p-3 mb-4 rounded border border-gray-300" />
+      <select class="w-full p-3 mb-4 rounded border border-gray-300" id="emotion">
+        <option value="">-- Chọn cảm xúc của bạn --</option>
+        <option value="vui">😊 Vui</option>
+        <option value="buồn">😢 Buồn</option>
+        <option value="tổn thương">💔 Tổn thương</option>
+        <option value="giận dữ">😡 Giận dữ</option>
+        <option value="biết ơn">🙏 Biết ơn</option>
+      </select>
       <button type="submit" class="bg-pink-600 text-white py-3 px-6 rounded-full shadow hover:bg-pink-700 transition duration-300 transform hover:scale-105">Gửi thư cho TâmAI</button>
     </form>
   </section>
